@@ -74,9 +74,10 @@ function SignUp() {
           type="password"
           required
           fullWidth
+          autoComplete="current-password"
           placeholder="8자 이상, 숫자, 문자, 특수문자를 포함해주세요."
           value={password}
-          onChnage={passwordInputHandler}
+          onChange={passwordInputHandler}
         />
         {isEmailValid && isPasswordValid ? (
           <Button

@@ -53,6 +53,7 @@ function Login() {
         if (response.ok) {
           const res = await response.json();
           localStorage.setItem('access_token', res.access_token);
+          alert('로그인이 성공했습니다');
           navigate('/todo', { replace: true });
         }
       })
@@ -64,12 +65,6 @@ function Login() {
 
   return (
     <Container>
-      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        <LockOutlinedIcon />
-      </Avatar>
-      <Typography component="h1" variant="h5">
-        Login
-      </Typography>
       <Box
         sx={{
           marginTop: 8,
@@ -81,6 +76,12 @@ function Login() {
         noValidate
         onSubmit={onSubmitHandler}
       >
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Login
+        </Typography>
         <TextField
           margin="normal"
           label="Email Address"
@@ -88,7 +89,7 @@ function Login() {
           fullWidth
           placeholder="이메일을 입력해 주세요"
           value={email}
-          onCHnage={emailInputHandler}
+          onChange={emailInputHandler}
         />
         <TextField
           margin="normal"
@@ -97,7 +98,7 @@ function Login() {
           required
           fullWidth
           autoComplete="current-password"
-          placeholder="8자 이상 입력해 주세요"
+          placeholder="8자 이상, 숫자, 문자, 특수문자를 포함해주세요."
           value={password}
           onChange={passwordInputHandler}
         />
