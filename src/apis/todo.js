@@ -1,39 +1,33 @@
-import URL from './index';
+import baseURL from './index';
 
-const token = localStorage.getItem('token');
-
-export const createTodo = (todo) =>
-  fetch(`${URL}/todos/`, {
+export const createTodo = (data) => {
+  return baseURL({
     method: 'POST',
-    headers: {
-      Authorization: 'Bearer' + token,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(todo)
+    url: `todos`,
+    data
   });
+};
 
-export const getTodo = async () =>
-  fetch(`${URL}/todos`, {
-    headers: {
-      Authorization: 'Bearer' + token
-    }
+export const getTodo = () => {
+  return baseURL({
+    method: 'GET',
+    url: 'todos'
   });
+};
 
-export const deleteTodo = async (id) =>
-  fetch(`${URL}/todos/${id}`, {
+export const deleteTodoAPI = (id) => {
+  return baseURL({
     method: 'DELETE',
-    headers: {
-      Authorization: 'Bearer' + token,
-      'Content=Type': 'application/json'
-    }
+    url: `todos/${id}`
   });
+};
 
-export const updateTodo = async (newTodo, id) =>
-  fetch(`${URL}/todos/${id}`, {
+export const updateTodo = (props) => {
+  const { todoId, data } = props;
+
+  return baseURL({
     method: 'PUT',
-    headers: {
-      Authorization: 'Bearer' + token,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(newTodo)
+    url: `todos/${todoId}`,
+    data
   });
+};

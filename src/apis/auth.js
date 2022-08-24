@@ -1,15 +1,15 @@
-import URL from './index';
+import baseURL from '.';
 
 export const signUpAPI = (data) => {
-  return URL({
+  return baseURL({
     method: 'POST',
-    url: 'auth/sigunup',
+    url: `auth/signup`,
     data
   });
 };
 
 export const loginAPI = (data) => {
-  return URL({
+  return baseURL({
     method: 'POST',
     url: 'auth/signin',
     data

@@ -1,14 +1,14 @@
 import axios from 'axios';
 
-const URL = axios.create({
+const baseURL = axios.create({
   baseURL:
     'https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/',
   headers: {
-    'Content-Type': 'application/json'
+    Accept: 'application/json'
   }
 });
 
-URL.interceptors.request.use(
+baseURL.interceptors.request.use(
   function (config) {
     config.headers.Authorization =
       'Bearer ' + localStorage.getItem('access_token');
@@ -19,4 +19,4 @@ URL.interceptors.request.use(
   }
 );
 
-export default URL;
+export default baseURL;

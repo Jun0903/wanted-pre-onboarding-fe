@@ -1,5 +1,5 @@
 import { FormControlLabel } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -40,28 +40,25 @@ function Login() {
     }
   };
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-
-    const user = {
-      email,
-      password
-    };
-
-    loginAPI(user)
-      .then(async (response) => {
-        if (response.ok) {
-          const res = await response.json();
-          localStorage.setItem('access_token', res.access_token);
-          alert('로그인이 성공했습니다');
-          navigate('/todo', { replace: true });
-        }
-      })
-      .catch((error) => {
-        console.error('로그인이 실패하였습니다.', error);
+  const submitSignin = async (props) => {
+    try {
+      await loginAPI(props).then((res) => {
+        localStorage.setItem('access_token', res.data.access_token);
+        navigate('/todo');
       });
-    setEmail('');
+    } catch (e) {
+      console.log(e);
+    }
   };
+
+  // 리다이렉트
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+
+    if (token) {
+      navigate('/todo');
+    }
+  }, []);
 
   return (
     <Container>
@@ -74,7 +71,7 @@ function Login() {
         }}
         component="form"
         noValidate
-        onSubmit={onSubmitHandler}
+        onSubmit={submitSignin}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
@@ -112,6 +109,7 @@ function Login() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={() => submitSignin({ email: email, password: password })}
           >
             로그인
           </Button>
@@ -122,6 +120,7 @@ function Login() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             disabled
+            onClick={() => submitSignin({ email: email, password: password })}
           >
             로그인
           </Button>
